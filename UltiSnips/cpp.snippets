@@ -1,0 +1,20 @@
+snippet cls "create class" b
+class ${1:className} {
+public:
+	$1(${2: args});
+	$3
+};
+endsnippet
+
+snippet vcls "Create virtual class" b
+class ${1:className} {
+public:
+	$1(${2: args});
+	$3
+	virtual ~$1() {$4}
+};
+endsnippet
+
+snippet vf "void function"
+void ${1: functionName} (${2: args});
+endsnippet
