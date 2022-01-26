@@ -24,7 +24,7 @@ endif
 
 
 let mapleader = "\<space>"
-let g:ycm_clangd_binary_path = "/usr/bin/clangd"
+" let g:ycm_clangd_binary_path = "/usr/bin/clangd"
 
 call plug#begin()
 
@@ -37,39 +37,43 @@ Plug 'https://github.com/tc50cal/vim-terminal' " Vim Terminal
 Plug 'https://github.com/preservim/tagbar' " Tagbar for code navigation
 Plug 'https://github.com/terryma/vim-multiple-cursors' " CTRL + N for multiple cursors
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-" Plug 'https://github.com/neoclide/coc.nvim'
-" Plug 'https://github.com/cpiger/NeoDebug', { 'for' : 'cpp' }
 
 Plug 'puremourning/vimspector'
 Plug 'szw/vim-maximizer'
 
 Plug 'https://github.com/bfrg/vim-cpp-modern', { 'for' : 'cpp' }
-" Plug 'https://github.com/junegunn/fzf.vim'
-Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 Plug 'https://github.com/BurntSushi/ripgrep'
 Plug 'https://github.com/SirVer/ultisnips'
-Plug 'h/ttps://github.com/honza/vim-snippets'
+Plug 'https://github.com/honza/vim-snippets'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'https://github.com/nvim-telescope/telescope.nvim'
 Plug 'https://github.com/sharkdp/fd'
 Plug 'google/vim-maktaba', { 'for' : 'cpp' }
 Plug 'google/vim-codefmt', { 'for' : 'cpp' }
 Plug 'google/vim-glaive', { 'for' : 'cpp' }
+Plug 'ghifarit53/tokyonight-vim'
+Plug 'https://github.com/goolord/alpha-nvim'
 
 call plug#end()
+
+set termguicolors
+
+let g:tokyonight_style = 'night' " available: night, storm
   
 set encoding=UTF-8
-colorscheme jellybeans
+colorscheme tokyonight " jellybeans
 
-source ~/.config/nvim/plugins/coc.vim
-source ~/.config/nvim/plugins/fzf.vim
-source ~/.config/nvim/plugins/nerdtree.vim
-source ~/.config/nvim/plugins/ultisnip.vim
-source ~/.config/nvim/plugins/airline.vim
-source ~/.config/nvim/plugins/terminal.vim
-source ~/.config/nvim/plugins/telescope.vim
-source ~/.config/nvim/plugins/debugger.vim
+source ~/.config/nvim/plugin/coc.vim
+source ~/.config/nvim/plugin/fzf.vim
+source ~/.config/nvim/plugin/nerdtree.vim
+source ~/.config/nvim/plugin/ultisnip.vim
+source ~/.config/nvim/plugin/airline.vim
+source ~/.config/nvim/plugin/terminal.vim
+source ~/.config/nvim/plugin/telescope.vim
+source ~/.config/nvim/plugin/debugger.vim
+" source ~/.config/nvim/plugins/dashboard.vim
+" source ~/.config/nvim/plugins/alphavim.vim
 
 " nnoremap <C-l> :call CocActionAsync('jumpDefinition')<CR>
 
