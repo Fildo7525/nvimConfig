@@ -10,14 +10,16 @@ nnoremap <leader>de :call vimspector#Reset()<CR>
 nnoremap <leader>dtcb :call vimspector#CleanLineBreakpoint()<CR>
 
 nmap <F10> <Plug>VimspectorStepOver
-nmap <F11> <Plug>VimspectorStepInto
-nmap <S-F11> <Plug>VimspectorStepOut
+nmap <F12> <Plug>VimspectorStepInto
+nmap <S-F12> <Plug>VimspectorStepOut
 nmap <leader><F4> <Plug>VimspectorRestart
 nmap <leader><F5> :call vimspector#Continue()<CR>
 
-nmap <leader>rcd <Plug>VimspectorRunToCursor
+nmap <leader>rcr <Plug>VimspectorRunToCursor
 nmap <leader>dbp <Plug>VimspectorToggleBreakpoint
 nmap <leader>dcbp <Plug>VimspectorToggleConditionalBreakpoint
 
+nmap <leader>k <Plug>VimspectorBalloonEvar
+xmap <leader>k <Plug>VimspectorBalloonEvar
 " packadd! vimspector
 
