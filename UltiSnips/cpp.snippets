@@ -15,6 +15,29 @@ public:
 };
 endsnippet
 
-snippet vf "void function"
+snippet vf "void function" b
 void ${1: functionName} (${2: args});
+endsnippet
+
+snippet foreach "for each loop"
+for (auto ${1:element} : ${2:vector}){
+	$3
+}
+endsnippet
+
+# snippet fori "normal forloop" b
+# for (int i = 0; i < ${1:length}; i++) {
+# 	$2
+# }
+
+snippet fort "iterator for loop" b
+for ( auto iter = ${1:vercor}.begin(); iter != $1.end(); iter++){
+	$2
+}
+endsnippet
+
+snippet forct "const iterator for loop" b
+for ( auto iter = ${1:vercor}.cbegin(); iter != $1.cend(); iter++){
+	$2
+}
 endsnippet

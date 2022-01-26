@@ -12,6 +12,7 @@ set hls
 set history=50
 set wildignore=*.docx,*.jpg,*.png,*.gif,*.pdf,*.pyc,*.exe,*.flv,*.img,*.xlsx
 
+
 filetype plugin indent on
 syntax on
 
@@ -21,7 +22,9 @@ if empty(glob('~/.config/nvim/autoload/plug.vim'))
         autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 
+
 let mapleader = "\<space>"
+let g:ycm_clangd_binary_path = "/usr/bin/clangd"
 
 call plug#begin()
 
@@ -29,43 +32,46 @@ Plug 'https://github.com/preservim/nerdtree' " NerdTree
 Plug 'https://github.com/tpope/vim-commentary' " For Commenting gcc & gc
 Plug 'https://github.com/rafi/awesome-vim-colorschemes' " Retro Scheme
 Plug 'https://github.com/vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
 Plug 'https://github.com/tc50cal/vim-terminal' " Vim Terminal
 Plug 'https://github.com/preservim/tagbar' " Tagbar for code navigation
 Plug 'https://github.com/terryma/vim-multiple-cursors' " CTRL + N for multiple cursors
-Plug 'https://github.com/neoclide/coc.nvim'
-source ~/.config/nvim/plugins/coc.vim
-Plug 'https://github.com/cpiger/NeoDebug', { 'for' : 'cpp' }
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+" Plug 'https://github.com/neoclide/coc.nvim'
+" Plug 'https://github.com/cpiger/NeoDebug', { 'for' : 'cpp' }
+
+Plug 'puremourning/vimspector'
+Plug 'szw/vim-maximizer'
+
 Plug 'https://github.com/bfrg/vim-cpp-modern', { 'for' : 'cpp' }
 " Plug 'https://github.com/junegunn/fzf.vim'
-" source ~/.confi/nvim/plugins/fzf.vim
-Plug 'https://github.com/honza/vim-snippets'
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
+Plug 'https://github.com/BurntSushi/ripgrep'
 Plug 'https://github.com/SirVer/ultisnips'
+Plug 'h/ttps://github.com/honza/vim-snippets'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'https://github.com/nvim-telescope/telescope.nvim'
-Plug 'https://github.com/BurntSushi/ripgrep'
+Plug 'https://github.com/sharkdp/fd'
 Plug 'google/vim-maktaba', { 'for' : 'cpp' }
 Plug 'google/vim-codefmt', { 'for' : 'cpp' }
 Plug 'google/vim-glaive', { 'for' : 'cpp' }
 
 call plug#end()
   
-
-" let g:snipMate = { 'snippet_version' : 1}
-let g:UltiSnipsEditSplit="vertical"
-let g:UltiSnipsJumpForwardTrigger="<c-b>"
-let g:UltiSnipsJumpBackwardTrigger="<c-z>"
-
-
 set encoding=UTF-8
 colorscheme jellybeans
 
-nnoremap <C-f> :NERDTreeFocus<CR>
-nnoremap <C-n> :NERDTree<CR>
-nnoremap <C-t> :NERDTreeToggle<CR>
-" nnoremap <C-l> :call CocActionAsync('jumpDefinition')<CR>
+source ~/.config/nvim/plugins/coc.vim
+source ~/.config/nvim/plugins/fzf.vim
+source ~/.config/nvim/plugins/nerdtree.vim
+source ~/.config/nvim/plugins/ultisnip.vim
+source ~/.config/nvim/plugins/airline.vim
+source ~/.config/nvim/plugins/terminal.vim
+source ~/.config/nvim/plugins/telescope.vim
+source ~/.config/nvim/plugins/debugger.vim
 
-nmap <C-d> :NeoDebug<CR>
-nmap <C-l> :DBGOpenLocals<CR>
+" nnoremap <C-l> :call CocActionAsync('jumpDefinition')<CR>
 
 inoremap ( ()<left>
 inoremap [ []<left>
@@ -73,21 +79,22 @@ inoremap ' ''<left>
 inoremap " ""<left>
 inoremap { {}<left>
 
-nmap <F9> :TagbarToggle<CR>
-
-let g:NERDTreeDirArrowExpandable="+"
-let g:NERDTreeDirArrowCollapsible="~"
-
-" air-line
-let g:airline_powerline_fonts = 1
-let g:airline#extensions#tabline#enabled = 1
-
 inoremap <expr> <Tab> pumvisible() ? coc#_select_confirm() : "<Tab>"
 
 " moving selected blocks
 vnoremap < <gv
 vnoremap > >gv
+vnoremap <leader>y :!clip.exe<CR>u
 
+" moving lines of code
+nmap <A-UP> <UP>ddp<UP>
+nmap <A-DOWN> ddp
+
+" Moving chunks of code -> not working
+" vnoremap <A-UP> d<UP>pv
+" vnoremap <A-DOWN> d<DOWN>pv
+
+" escape and save
 inoremap jj <ESC>:w<CR>
 
 nmap <leader>sc :source ~/.config/nvim/init.vim<cr>
@@ -96,6 +103,7 @@ nmap <leader>pi :PlugInstall<cr>
 
 " opens a file even if it does not exist
 map gf :e <cfile><cr>
+nmap <leader>jc :!touch <cfile>.java<cr>
 
 " moving between buffers
 nmap <C-LEFt> :bprevious<CR>
@@ -110,22 +118,15 @@ nmap <leader>bb :bd!<CR>
 nmap <leader>w :w<CR>
 nmap <leader>qq :wq<CR>
 
-" mapped in buildProject folders
-nmap <F8> :terminal! ./build.sh<CR>
-nmap <F5> :!./compile.sh<CR>
+nmap <F9> :TagbarToggle<CR>
+
+" text folding in brackets
 set foldmethod=marker foldmarker={,} foldlevel=2
 nnoremap <silent> <leader>fl m`zcVzCzo`
-nmap <A-UP> <UP>ddp<UP>
-nmap <A-DOWN> ddp
 
-" Find files using Telescope command-line sugar.
-nnoremap <leader>ff <cmd>Telescope find_files<cr>
-nnoremap <leader>fg <cmd>Telescope live_grep<cr>
-nnoremap <leader>fb <cmd>Telescope buffers<cr>
-nnoremap <leader>fh <cmd>Telescope help_tags<cr>
+" nnoremap z= <Cmd>call VSCodeNotify('keyboard-quickfix.openQuickFix')<CR>
 
-" Using Lua functions
-" nnoremap <leader>ff <cmd>lua require('telescope.builtin').find_files()<cr>
-" nnoremap <leader>fg <cmd>lua require('telescope.builtin').live_grep()<cr>
-" nnoremap <leader>fb <cmd>lua require('telescope.builtin').buffers()<cr>
-" nnoremap <leader>fh <cmd>lua require('telescope.builtin').help_tags()<cr>
+" Maximizer
+nmap <leader>m :MaximizerToggle<CR>
+
+" let g:vimspector_enable_mappings = 'HUMAN'
