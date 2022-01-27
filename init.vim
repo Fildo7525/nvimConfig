@@ -9,9 +9,10 @@ set mouse=a
 set incsearch
 set ignorecase
 set hls
+set backup
 set history=50
+set whichwrap=b,s,<,>,[,]
 set wildignore=*.docx,*.jpg,*.png,*.gif,*.pdf,*.pyc,*.exe,*.flv,*.img,*.xlsx
-
 
 filetype plugin indent on
 syntax on
@@ -22,8 +23,10 @@ if empty(glob('~/.config/nvim/autoload/plug.vim'))
         autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 
-
 let mapleader = "\<space>"
+" nmap <F2> :set listchars=tab:>-,trail:-<CR>		" marks trailing spaces and tabs
+set iskeyword+=-
+
 " let g:ycm_clangd_binary_path = "/usr/bin/clangd"
 
 call plug#begin()
@@ -42,6 +45,8 @@ Plug 'puremourning/vimspector'
 Plug 'szw/vim-maximizer'
 
 Plug 'https://github.com/bfrg/vim-cpp-modern', { 'for' : 'cpp' }
+" Plug 'junegunn/fzf' { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 Plug 'https://github.com/BurntSushi/ripgrep'
 Plug 'https://github.com/SirVer/ultisnips'
@@ -55,6 +60,10 @@ Plug 'google/vim-glaive', { 'for' : 'cpp' }
 Plug 'ghifarit53/tokyonight-vim'
 Plug 'https://github.com/goolord/alpha-nvim'
 
+Plug 'drewtempelmeyer/palenight.vim'
+Plug 'dracula/vim', { 'as': 'dracula' }
+Plug 'gosukiwi/vim-atom-dark'
+
 call plug#end()
 
 set termguicolors
@@ -62,7 +71,7 @@ set termguicolors
 let g:tokyonight_style = 'night' " available: night, storm
   
 set encoding=UTF-8
-colorscheme tokyonight " jellybeans
+colorscheme tokyonight " atom-dark dracula sonokai onedark palenight jellybeans
 
 source ~/.config/nvim/plugin/coc.vim
 source ~/.config/nvim/plugin/fzf.vim

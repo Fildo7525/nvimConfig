@@ -22,4 +22,6 @@ nmap <leader>dcbp <Plug>VimspectorToggleConditionalBreakpoint
 nmap <leader>k <Plug>VimspectorBalloonEvar
 xmap <leader>k <Plug>VimspectorBalloonEvar
 " packadd! vimspector
+set modifiable
+set buftype: " "
 
