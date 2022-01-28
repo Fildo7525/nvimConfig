@@ -12,6 +12,7 @@ set hls
 set backup
 set history=50
 set whichwrap=b,s,<,>,[,]
+set noexpandtab
 set wildignore=*.docx,*.jpg,*.png,*.gif,*.pdf,*.pyc,*.exe,*.flv,*.img,*.xlsx
 
 filetype plugin indent on
@@ -48,21 +49,24 @@ Plug 'https://github.com/bfrg/vim-cpp-modern', { 'for' : 'cpp' }
 " Plug 'junegunn/fzf' { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
-Plug 'https://github.com/BurntSushi/ripgrep'
+
 Plug 'https://github.com/SirVer/ultisnips'
 Plug 'https://github.com/honza/vim-snippets'
+
+Plug 'https://github.com/BurntSushi/ripgrep'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'https://github.com/nvim-telescope/telescope.nvim'
-Plug 'https://github.com/sharkdp/fd'
-Plug 'google/vim-maktaba', { 'for' : 'cpp' }
-Plug 'google/vim-codefmt', { 'for' : 'cpp' }
-Plug 'google/vim-glaive', { 'for' : 'cpp' }
+" Plug 'https://github.com/sharkdp/fd'
+" ['-i', '2', '-sr', '-ci']
+" Plug 'google/vim-maktaba'
+" Plug 'google/vim-codefmt'
+" Plug 'google/vim-glaive'
 Plug 'ghifarit53/tokyonight-vim'
-Plug 'https://github.com/goolord/alpha-nvim'
 
-Plug 'drewtempelmeyer/palenight.vim'
-Plug 'dracula/vim', { 'as': 'dracula' }
-Plug 'gosukiwi/vim-atom-dark'
+Plug 'https://github.com/goolord/alpha-nvim'
+" Plug 'drewtempelmeyer/palenight.vim'
+" Plug 'dracula/vim', { 'as': 'dracula' }
+" Plug 'gosukiwi/vim-atom-dark'
 
 call plug#end()
 
@@ -81,8 +85,9 @@ source ~/.config/nvim/plugin/airline.vim
 source ~/.config/nvim/plugin/terminal.vim
 source ~/.config/nvim/plugin/telescope.vim
 source ~/.config/nvim/plugin/debugger.vim
+" source ~/.config/nvim/plugin/formater.vim
 " source ~/.config/nvim/plugins/dashboard.vim
-" source ~/.config/nvim/plugins/alphavim.vim
+source ~/.config/nvim/plugins/alphavim.vim
 
 " nnoremap <C-l> :call CocActionAsync('jumpDefinition')<CR>
 
@@ -100,12 +105,14 @@ vnoremap > >gv
 vnoremap <leader>y :!clip.exe<CR>u
 
 " moving lines of code
-nmap <A-UP> <UP>ddp<UP>
-nmap <A-DOWN> ddp
+nnoremap <A-UP> :m-2<CR>
+nnoremap <A-DOWN> :m+<CR>
+inoremap <A-UP> <ESC>:m .-2<CR>==gi
+inoremap <A-DOWN>   <ESC>:m .+1<CR>==gi
 
-" Moving chunks of code -> not working
-" vnoremap <A-UP> d<UP>pv
-" vnoremap <A-DOWN> d<DOWN>pv
+" Moving chunks of code 
+vnoremap J :m '>+<CR>gv=gv
+vnoremap K :m '<-2<CR>gv=gv
 
 " escape and save
 inoremap jj <ESC>:w<CR>
